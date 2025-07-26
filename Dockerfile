@@ -1,8 +1,9 @@
-FROM node:20-alpine
+FROM node:lts AS build
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm i
 RUN npm run build
-EXPOSE 4321
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--allowedHosts", "hello.deploy.afuzzy.cloud"]
+
+FROM httpd:2.4 AS runtime
+COPY --from=build /app/dist /usr/local/apache2/htdocs/
+EXPOSE 80
