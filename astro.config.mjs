@@ -7,7 +7,7 @@ export default defineConfig({
     vite: {
         preview: {
             host: '0.0.0.0',
-            allowedHosts: true
+            allowedHosts: ['hello.deploy.afuzzy.cloud'] // Add this line
         }
     }
 });
